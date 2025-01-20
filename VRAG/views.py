@@ -69,9 +69,6 @@ def update(request):
 
     if request.POST.get('video_get'):
         func_video_process.videos_get()
-        videos = load_video()
-        latest_update = list(videos)[0].split("-")[0]
-        msg = f"latest update is {latest_update}"
 
     if os.path.isfile(video_list):
         if request.POST.get('videos_download'):
@@ -85,6 +82,7 @@ def update(request):
         if request.POST.get('brain_reload'):
             videos = load_video()
             func_chatbot.brain_reload(videos)
+            
     else:
         msg = "Not found any video list file, do step 1 first."
 
