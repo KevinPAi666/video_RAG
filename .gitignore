@@ -1,0 +1,5 @@
+# Default ignored files
+/file/
+.env
+db.sqlite3
+/config/gcloud_key.json

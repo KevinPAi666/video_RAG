@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <style>
+        /* 全域樣式 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 1200px; /* 最大寬度限制，讓內容不超過螢幕過多 */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 中心對齊 */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        img {
+            display: block;
+            max-width: 200px; /* 限制圖片大小 */
+            height: auto;
+            margin: 0 auto; /* 圖片置中 */
+        }
+
+        /* 登入表單樣式 */
+        .login-login-form-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px; /* 登入表單寬度限制 */
+            gap: 10px;
+        }
+        .login-input-field {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .login-button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .login-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background-color: #5a66cc;
+        }
+        span {
+            color: red;
+        }
+
+        /* 登出與更新按鈕樣式 */
+        .logout-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(10px, 10px); /* 往左上偏移 10px */
+        }
+
+        /* 提問與回答區 */
+        .ask-container {
+            width: 100%;
+        }
+       .answer-container {
+            width: 250%;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .question_textbox {
+            width: 100%;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 8px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .question_textbox[readonly] {
+            background-color: #f8f8f8;
+        }
+        .answer-container .question_textbox {
+            width: 100%; /* 讓回答區也從中間向兩側延伸 */
+            height: 400px; /* 保持固定高度 */
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .question_textbox {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .login-btn {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<form method="POST" class="form-container">
+    {% csrf_token %}
+    {% load static %}
+    <img src="{% static 'logo.png' %}" alt="My Image">
+
+    {% if user.is_authenticated %}
+    <div class="logout-container">
+        <input type="submit" name="logout" value="登出" class="logout_btn">
+        <a href="/update" class="update_btn">
+            <button type="button">我是管理員我要更新影片清單</button>
+        </a>
+    </div>
+
+    <div class="ask-container">
+        <label for="user_question">我想問: </label>
+        <textarea id="user_question" name="user_question" placeholder="我想學什麼? 我要找什麼內容?" class="question_textbox">{{ question }}</textarea>
+        <input type="submit" name="question_ask" value="問">
+    </div>
+
+    {% if error_msg %}
+    <span>{{ error_msg }}</span>
+    {% else %} <br>
+    {% endif %}
+
+    <div class="answer-container">
+        <label for="question_answer">機器人: </label>
+        <textarea id="question_answer" name="question_answer" class="question_textbox" readonly>{{ question_answer }}</textarea>
+    </div>
+
+    {% else %}
+    <div class="login-login-form-container">
+        <input type="text" name="account" placeholder="account" class="login-input-field">
+        <input type="password" name="password" placeholder="password" class="login-input-field">
+        <div class="login-button-container">
+            <input type="submit" name="registry" value="registry" class="login-btn" style="background-color: #A0A0A1;">
+            <input type="submit" name="login" value="login" class="login-btn" style="background-color: #8DCD49;">
+        </div>
+        {% if error_msg %}
+        <span>{{ error_msg }}</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</form>
+</body>
+</html>

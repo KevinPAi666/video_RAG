@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>brain update</title>
+</head>
+<body>
+<form method="POST" autocomplete="off">
+    {% csrf_token %}
+    <p> {{ msg }}</p>
+
+    <label>step 1. </label><br>
+    <label>更新影片清單</label><br>
+    <input type="submit" name="video_get" value="click"><br><br>
+
+    <label>step 2. </label><br>
+    <label>從影片清單中下載mp3檔</label><br>
+    <input type="submit" name="videos_download" value="click"><br><br>
+
+
+    <label>step 3. </label><br>
+    <label>從所有mp3檔中轉出字幕檔</label><br>
+    <input type="submit" name="videos_asr" value="click"><br><br>
+
+    <label>step 4. </label><br>
+    <label>將字幕檔做RAG</label><br>
+    <input type="submit" name="brain_reload" value="click"><br><br>
+
+    <label>step 5. </label><br>
+    <label>檢查路徑檔案是否為最新日期</label><br><br>
+
+    <a href="/"> <button type="button">OK，返回</button></a>
+
+</form>
+</body>
+</html>
