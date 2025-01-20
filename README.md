@@ -23,6 +23,6 @@
 
 ## 運行方式
 <pre><code>bash
-$ docker build -t aws_rag .
-$ docker run build -p 8000:8000 aws_rag
+$ docker build -t video_rag .
+$ docker run build -p 8000:8000 video_rag
 </code></precode>
